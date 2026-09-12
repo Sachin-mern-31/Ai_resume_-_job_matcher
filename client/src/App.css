@@ -1,0 +1,34 @@
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.App {
+  display: flex;
+  flex-shrink: 0;
+  box-sizing: border-box;
+}
+
+.mainContent {
+  flex: 1;
+  min-height: 100vh;
+  overflow-y: auto;
+}
+
+.loadingScreen {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  font-size: 18px;
+  color: #0b0b5a;
+  background: #f5f7ff;
+}
+
+@media screen and (max-width: 780px) {
+  .App {
+    flex-direction: column;
+  }
+}

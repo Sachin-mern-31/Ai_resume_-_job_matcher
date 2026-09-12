@@ -1,0 +1,401 @@
+.page {
+  flex: 1;
+  background: #f0f2ff;
+  min-height: 100vh;
+  padding: 36px 44px;
+  box-sizing: border-box;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+}
+
+/* ── Header ── */
+.header {
+  margin-bottom: 32px;
+}
+
+.greeting {
+  font-size: 14px;
+  color: #888;
+  margin: 0 0 4px;
+}
+
+.pageTitle {
+  font-size: 32px;
+  font-weight: 800;
+  color: #0b0b5a;
+  margin: 0;
+}
+
+/* ── Form grid ── */
+.formGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+.card {
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 28px;
+  box-shadow: 0 4px 20px rgba(11,11,90,0.08);
+}
+
+.cardTitle {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1a1a5e;
+  margin: 0 0 4px;
+}
+
+.cardSubtitle {
+  font-size: 13px;
+  color: #999;
+  margin: 0 0 20px;
+}
+
+/* ── Drop zone ── */
+.dropZone {
+  border: 2px dashed #c5c9f0;
+  border-radius: 14px;
+  background: #f7f8ff;
+  min-height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.dropZone:hover, .dragging {
+  border-color: #4848de;
+  background: #eef0ff;
+}
+
+.hasFile {
+  border-color: #27ae60;
+  background: #f0fff4;
+}
+
+.hiddenInput {
+  display: none;
+}
+
+.dropContent {
+  text-align: center;
+  padding: 24px;
+}
+
+.dropText {
+  font-size: 16px;
+  color: #4a4a9a;
+  font-weight: 600;
+  margin: 12px 0 4px;
+}
+
+.dropOr {
+  font-size: 13px;
+  color: #aaa;
+  margin: 0;
+}
+
+.fileChosen {
+  text-align: center;
+  padding: 24px;
+}
+
+.fileName {
+  font-size: 14px;
+  font-weight: 600;
+  color: #4848de;
+  margin: 8px 0 4px;
+  word-break: break-all;
+}
+
+.fileSize {
+  font-size: 12px;
+  color: #aaa;
+}
+
+/* ── Textarea ── */
+.textarea {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1.5px solid #dde0f0;
+  border-radius: 12px;
+  padding: 14px 16px;
+  font-size: 14px;
+  color: #333;
+  background: #fafbff;
+  resize: vertical;
+  outline: none;
+  font-family: inherit;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  line-height: 1.6;
+}
+
+.textarea:focus {
+  border-color: #4848de;
+  box-shadow: 0 0 0 3px rgba(72,72,222,0.1);
+}
+
+.charCount {
+  font-size: 12px;
+  color: #bbb;
+  text-align: right;
+  margin-top: 6px;
+}
+
+/* ── Instructions ── */
+.instructionBanner {
+  grid-column: 1 / -1;
+  background: #fff8e7;
+  border: 1px solid #ffe0a0;
+  border-radius: 12px;
+  padding: 14px 20px;
+  font-size: 14px;
+  color: #7d5a00;
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.errorMsg {
+  grid-column: 1 / -1;
+  background: #fff0f0;
+  border: 1px solid #ffb3b3;
+  color: #c0392b;
+  border-radius: 10px;
+  padding: 12px 16px;
+  font-size: 14px;
+}
+
+/* ── Analyze button ── */
+.analyzeBtn {
+  grid-column: 1 / -1;
+  padding: 16px;
+  background: linear-gradient(135deg, #0b0b5a, #4848de);
+  color: white;
+  border: none;
+  border-radius: 14px;
+  font-size: 17px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 56px;
+  transition: opacity 0.2s, transform 0.15s;
+  letter-spacing: 0.3px;
+}
+
+.analyzeBtn:hover:not(:disabled) {
+  opacity: 0.92;
+  transform: translateY(-1px);
+}
+
+.analyzeBtn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.btnSpinner {
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(255,255,255,0.3);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  flex-shrink: 0;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ─────────────── RESULTS ─────────────── */
+.results {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* Score hero */
+.scoreCard {
+  background: white;
+  border-radius: 20px;
+  padding: 36px;
+  box-shadow: 0 4px 24px rgba(11,11,90,0.1);
+  display: flex;
+  gap: 40px;
+  align-items: center;
+}
+
+.scoreRing {
+  position: relative;
+  width: 140px;
+  height: 140px;
+  flex-shrink: 0;
+}
+
+.scoreSvg {
+  width: 140px;
+  height: 140px;
+  transform: rotate(-90deg);
+}
+
+.scoreTrack {
+  fill: none;
+  stroke: #eef0ff;
+  stroke-width: 10;
+}
+
+.scoreProgress {
+  fill: none;
+  stroke-width: 10;
+  stroke-linecap: round;
+  stroke-dasharray: 327;
+  transition: stroke-dashoffset 1s ease;
+}
+
+.scoreInner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.scoreNumber {
+  font-size: 36px;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.scoreLabel {
+  font-size: 13px;
+  color: #aaa;
+}
+
+.scoreInfo {
+  flex: 1;
+}
+
+.scoreTitle {
+  font-size: 22px;
+  font-weight: 700;
+  color: #0b0b5a;
+  margin: 0 0 10px;
+}
+
+.scoreSummary {
+  font-size: 15px;
+  color: #555;
+  line-height: 1.7;
+  margin: 0 0 20px;
+}
+
+.againBtn {
+  padding: 11px 22px;
+  background: #0b0b5a;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.againBtn:hover { opacity: 0.85; }
+
+/* Results grid */
+.resultsGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.skillCard {
+  background: white;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 3px 16px rgba(11,11,90,0.07);
+}
+
+.skillCardTitle {
+  font-size: 15px;
+  font-weight: 700;
+  color: #1a1a5e;
+  margin: 0 0 14px;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.chip {
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.chipGreen  { background: #e8f8f0; color: #1a7a4a; }
+.chipRed    { background: #fdf0f0; color: #a93226; }
+.chipBlue   { background: #eef2ff; color: #2d4bab; }
+.chipOrange { background: #fff5e8; color: #9a5d00; }
+
+.skillList {
+  margin: 0;
+  padding-left: 18px;
+  color: #444;
+  font-size: 14px;
+  line-height: 2;
+}
+
+.emptyMsg {
+  color: #bbb;
+  font-size: 14px;
+  font-style: italic;
+}
+
+/* Job suggestions */
+.suggestCard {
+  background: linear-gradient(135deg, #0b0b5a 0%, #1a1a8c 100%);
+  border-radius: 18px;
+  padding: 28px 32px;
+}
+
+.suggestTitle {
+  font-size: 18px;
+  font-weight: 700;
+  color: white;
+  margin: 0 0 18px;
+}
+
+.suggestGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.jobChip {
+  background: rgba(255,255,255,0.14);
+  border: 1px solid rgba(255,255,255,0.2);
+  color: white;
+  padding: 8px 16px;
+  border-radius: 24px;
+  font-size: 14px;
+  font-weight: 500;
+  transition: background 0.2s;
+}
+
+.jobChip:hover {
+  background: rgba(255,255,255,0.24);
+}
+
+@media (max-width: 900px) {
+  .formGrid, .resultsGrid { grid-template-columns: 1fr; }
+  .page { padding: 24px 20px; }
+  .scoreCard { flex-direction: column; align-items: flex-start; }
+}

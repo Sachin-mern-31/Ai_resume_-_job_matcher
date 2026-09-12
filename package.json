@@ -1,0 +1,11 @@
+{
+  "name": "ai-resume-job-matcher",
+  "version": "1.0.0",
+  "description": "AI Resume and Job Matcher MERN Application",
+  "private": true,
+  "scripts": {
+    "dev:server": "npm --prefix server run dev",
+    "dev:client": "npm --prefix client run dev",
+    "build:client": "npm --prefix client run build"
+  }
+}
