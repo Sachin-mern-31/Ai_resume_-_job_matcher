@@ -7,7 +7,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'http://127.0.0.1:5000',
+        target: 'https://ai-resume-job-matcher-1-0k1t.onrender.com',
         changeOrigin: true,
         secure: false,
       },
