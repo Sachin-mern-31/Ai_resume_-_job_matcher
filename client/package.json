@@ -4,10 +4,10 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "powershell -Command \"node './node_modules/vite/bin/vite.js'\"",
-    "build": "powershell -Command \"node './node_modules/vite/bin/vite.js' build\"",
+    "dev": "node ./node_modules/vite/bin/vite.js",
+    "build": "node ./node_modules/vite/bin/vite.js build",
     "lint": "eslint .",
-    "preview": "powershell -Command \"node './node_modules/vite/bin/vite.js' preview\""
+    "preview": "node ./node_modules/vite/bin/vite.js preview"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
