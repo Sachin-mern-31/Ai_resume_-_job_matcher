@@ -21,6 +21,8 @@ const ProtectedRoute = ({ children, adminRequired = false }) => {
   return children;
 };
 
+import CookieConsent from "./components/CookieConsent/CookieConsent";
+
 // ─── App Shell: Sidebar + Routes ─────────────────────────────────────────────
 const AppShell = () => (
   <div className="App">
@@ -33,16 +35,22 @@ const AppShell = () => (
         <Route path="*"          element={<Navigate to="/dashboard" replace />} />
       </Routes>
     </div>
+    <CookieConsent />
   </div>
 );
+
+import Landing from "./pages/Landing/Landing";
 
 // ─── Root App ─────────────────────────────────────────────────────────────────
 function App() {
   return (
     <AuthProvider>
       <Routes>
-        {/* Public routes — no sidebar */}
-        <Route path="/login"    element={<Login />} />
+        {/* Public Landing Page */}
+        <Route path="/" element={<Landing />} />
+
+        {/* Public Auth routes */}
+        <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
 
         {/* Protected app shell — has sidebar */}

@@ -1,10 +1,11 @@
 .page {
   flex: 1;
-  background: #f0f2ff;
+  background: #f8fafc;
   min-height: 100vh;
   padding: 36px 44px;
   box-sizing: border-box;
-  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  color: #0f172a;
 }
 
 /* ── Header ── */
@@ -14,15 +15,17 @@
 
 .greeting {
   font-size: 14px;
-  color: #888;
+  color: #64748b;
   margin: 0 0 4px;
+  font-weight: 500;
 }
 
 .pageTitle {
-  font-size: 32px;
+  font-size: 30px;
   font-weight: 800;
-  color: #0b0b5a;
+  color: #0f172a;
   margin: 0;
+  letter-spacing: -0.5px;
 }
 
 /* ── Form grid ── */
@@ -34,45 +37,46 @@
 
 .card {
   background: #ffffff;
-  border-radius: 18px;
+  border-radius: 16px;
   padding: 28px;
-  box-shadow: 0 4px 20px rgba(11,11,90,0.08);
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.03);
 }
 
 .cardTitle {
   font-size: 18px;
   font-weight: 700;
-  color: #1a1a5e;
+  color: #0f172a;
   margin: 0 0 4px;
 }
 
 .cardSubtitle {
   font-size: 13px;
-  color: #999;
+  color: #64748b;
   margin: 0 0 20px;
 }
 
 /* ── Drop zone ── */
 .dropZone {
-  border: 2px dashed #c5c9f0;
+  border: 2px dashed #cbd5e1;
   border-radius: 14px;
-  background: #f7f8ff;
-  min-height: 200px;
+  background: #f8fafc;
+  min-height: 220px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: border-color 0.2s, background 0.2s;
+  transition: all 0.2s ease;
 }
 
 .dropZone:hover, .dragging {
-  border-color: #4848de;
-  background: #eef0ff;
+  border-color: #2dc08d;
+  background: #e6f7f2;
 }
 
 .hasFile {
-  border-color: #27ae60;
-  background: #f0fff4;
+  border-color: #2dc08d;
+  background: #f0fdf4;
 }
 
 .hiddenInput {
@@ -86,14 +90,14 @@
 
 .dropText {
   font-size: 16px;
-  color: #4a4a9a;
-  font-weight: 600;
+  color: #0f172a;
+  font-weight: 700;
   margin: 12px 0 4px;
 }
 
 .dropOr {
   font-size: 13px;
-  color: #aaa;
+  color: #64748b;
   margin: 0;
 }
 
@@ -104,42 +108,42 @@
 
 .fileName {
   font-size: 14px;
-  font-weight: 600;
-  color: #4848de;
+  font-weight: 700;
+  color: #0f172a;
   margin: 8px 0 4px;
   word-break: break-all;
 }
 
 .fileSize {
   font-size: 12px;
-  color: #aaa;
+  color: #64748b;
 }
 
 /* ── Textarea ── */
 .textarea {
   width: 100%;
   box-sizing: border-box;
-  border: 1.5px solid #dde0f0;
+  border: 1px solid #cbd5e1;
   border-radius: 12px;
   padding: 14px 16px;
   font-size: 14px;
-  color: #333;
-  background: #fafbff;
+  color: #0f172a;
+  background: #ffffff;
   resize: vertical;
   outline: none;
   font-family: inherit;
-  transition: border-color 0.2s, box-shadow 0.2s;
+  transition: all 0.2s ease;
   line-height: 1.6;
 }
 
 .textarea:focus {
-  border-color: #4848de;
-  box-shadow: 0 0 0 3px rgba(72,72,222,0.1);
+  border-color: #2dc08d;
+  box-shadow: 0 0 0 3px rgba(45, 192, 141, 0.15);
 }
 
 .charCount {
   font-size: 12px;
-  color: #bbb;
+  color: #94a3b8;
   text-align: right;
   margin-top: 6px;
 }
@@ -147,35 +151,37 @@
 /* ── Instructions ── */
 .instructionBanner {
   grid-column: 1 / -1;
-  background: #fff8e7;
-  border: 1px solid #ffe0a0;
+  background: #e6f7f2;
+  border: 1px solid #b3ebd7;
   border-radius: 12px;
   padding: 14px 20px;
   font-size: 14px;
-  color: #7d5a00;
+  color: #178a63;
   display: flex;
-  gap: 10px;
-  align-items: flex-start;
+  gap: 12px;
+  align-items: center;
+  font-weight: 500;
 }
 
 .errorMsg {
   grid-column: 1 / -1;
-  background: #fff0f0;
-  border: 1px solid #ffb3b3;
-  color: #c0392b;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #dc2626;
   border-radius: 10px;
   padding: 12px 16px;
   font-size: 14px;
+  text-align: center;
 }
 
 /* ── Analyze button ── */
 .analyzeBtn {
   grid-column: 1 / -1;
   padding: 16px;
-  background: linear-gradient(135deg, #0b0b5a, #4848de);
+  background: #2dc08d;
   color: white;
   border: none;
-  border-radius: 14px;
+  border-radius: 12px;
   font-size: 17px;
   font-weight: 700;
   cursor: pointer;
@@ -183,14 +189,15 @@
   align-items: center;
   justify-content: center;
   gap: 10px;
-  min-height: 56px;
-  transition: opacity 0.2s, transform 0.15s;
-  letter-spacing: 0.3px;
+  min-height: 54px;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 14px rgba(45, 192, 141, 0.3);
 }
 
 .analyzeBtn:hover:not(:disabled) {
-  opacity: 0.92;
+  background: #26a97b;
   transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(45, 192, 141, 0.4);
 }
 
 .analyzeBtn:disabled {
@@ -220,11 +227,12 @@
 /* Score hero */
 .scoreCard {
   background: white;
-  border-radius: 20px;
-  padding: 36px;
-  box-shadow: 0 4px 24px rgba(11,11,90,0.1);
+  border-radius: 18px;
+  padding: 32px 36px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
   display: flex;
-  gap: 40px;
+  gap: 36px;
   align-items: center;
 }
 
@@ -243,7 +251,7 @@
 
 .scoreTrack {
   fill: none;
-  stroke: #eef0ff;
+  stroke: #f1f5f9;
   stroke-width: 10;
 }
 
@@ -264,47 +272,57 @@
 }
 
 .scoreNumber {
-  font-size: 36px;
-  font-weight: 800;
+  font-size: 38px;
+  font-weight: 900;
   line-height: 1;
 }
 
 .scoreLabel {
   font-size: 13px;
-  color: #aaa;
+  color: #94a3b8;
+  font-weight: 600;
 }
 
 .scoreInfo {
   flex: 1;
 }
 
+.scoreBadge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 9999px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
 .scoreTitle {
   font-size: 22px;
-  font-weight: 700;
-  color: #0b0b5a;
-  margin: 0 0 10px;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0 0 8px;
 }
 
 .scoreSummary {
-  font-size: 15px;
-  color: #555;
-  line-height: 1.7;
-  margin: 0 0 20px;
+  font-size: 14px;
+  color: #475569;
+  line-height: 1.65;
+  margin: 0 0 18px;
 }
 
 .againBtn {
-  padding: 11px 22px;
-  background: #0b0b5a;
+  padding: 10px 20px;
+  background: #0f172a;
   color: white;
   border: none;
-  border-radius: 10px;
+  border-radius: 8px;
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
-  transition: opacity 0.2s;
+  transition: background 0.2s;
 }
 
-.againBtn:hover { opacity: 0.85; }
+.againBtn:hover { background: #1e293b; }
 
 /* Results grid */
 .resultsGrid {
@@ -317,14 +335,22 @@
   background: white;
   border-radius: 16px;
   padding: 24px;
-  box-shadow: 0 3px 16px rgba(11,11,90,0.07);
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 3px 14px rgba(0, 0, 0, 0.03);
+}
+
+.cardHeaderFlex {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 14px;
 }
 
 .skillCardTitle {
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 700;
-  color: #1a1a5e;
-  margin: 0 0 14px;
+  color: #0f172a;
+  margin: 0;
 }
 
 .chips {
@@ -337,40 +363,40 @@
   padding: 5px 12px;
   border-radius: 20px;
   font-size: 13px;
-  font-weight: 500;
+  font-weight: 600;
 }
 
-.chipGreen  { background: #e8f8f0; color: #1a7a4a; }
-.chipRed    { background: #fdf0f0; color: #a93226; }
-.chipBlue   { background: #eef2ff; color: #2d4bab; }
-.chipOrange { background: #fff5e8; color: #9a5d00; }
+.chipGreen  { background: #dcfce7; color: #15803d; }
+.chipRed    { background: #fee2e2; color: #b91c1c; }
+.chipBlue   { background: #dbeafe; color: #1d4ed8; }
+.chipOrange { background: #fef3c7; color: #b45309; }
 
 .skillList {
   margin: 0;
   padding-left: 18px;
-  color: #444;
+  color: #334155;
   font-size: 14px;
-  line-height: 2;
+  line-height: 1.8;
 }
 
 .emptyMsg {
-  color: #bbb;
+  color: #94a3b8;
   font-size: 14px;
   font-style: italic;
 }
 
 /* Job suggestions */
 .suggestCard {
-  background: linear-gradient(135deg, #0b0b5a 0%, #1a1a8c 100%);
-  border-radius: 18px;
+  background: #0f172a;
+  border-radius: 16px;
   padding: 28px 32px;
 }
 
 .suggestTitle {
-  font-size: 18px;
+  font-size: 17px;
   font-weight: 700;
   color: white;
-  margin: 0 0 18px;
+  margin: 0 0 16px;
 }
 
 .suggestGrid {
@@ -380,18 +406,18 @@
 }
 
 .jobChip {
-  background: rgba(255,255,255,0.14);
-  border: 1px solid rgba(255,255,255,0.2);
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.15);
   color: white;
   padding: 8px 16px;
   border-radius: 24px;
-  font-size: 14px;
-  font-weight: 500;
+  font-size: 13.5px;
+  font-weight: 600;
   transition: background 0.2s;
 }
 
 .jobChip:hover {
-  background: rgba(255,255,255,0.24);
+  background: rgba(255,255,255,0.2);
 }
 
 @media (max-width: 900px) {

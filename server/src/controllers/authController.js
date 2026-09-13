@@ -13,11 +13,19 @@ export const register = async (req, res) => {
     if (!name || !email || !password) {
       return res.status(400).json({ success: false, message: 'All fields are required' });
     }
-    const exists = await User.findOne({ email });
-    if (exists) {
-      return res.status(409).json({ success: false, message: 'Email already registered' });
+    const cleanEmail = email.trim().toLowerCase();
+    const cleanPassword = password.trim();
+    const cleanName = name.trim();
+
+    if (cleanPassword.length < 6) {
+      return res.status(400).json({ success: false, message: 'Password must be at least 6 characters' });
     }
-    const user = await User.create({ name, email, password });
+
+    const exists = await User.findOne({ email: cleanEmail });
+    if (exists) {
+      return res.status(409).json({ success: false, message: 'Email is already registered' });
+    }
+    const user = await User.create({ name: cleanName, email: cleanEmail, password: cleanPassword });
     res.status(201).json({
       success: true,
       token: generateToken(user._id),
@@ -35,9 +43,12 @@ export const login = async (req, res) => {
     if (!email || !password) {
       return res.status(400).json({ success: false, message: 'Email and password are required' });
     }
-    const user = await User.findOne({ email }).select('+password');
-    if (!user || !(await user.matchPassword(password))) {
-      return res.status(401).json({ success: false, message: 'Invalid credentials' });
+    const cleanEmail = email.trim().toLowerCase();
+    const cleanPassword = password.trim();
+
+    const user = await User.findOne({ email: cleanEmail }).select('+password');
+    if (!user || !(await user.matchPassword(cleanPassword))) {
+      return res.status(401).json({ success: false, message: 'Invalid email or password' });
     }
     res.json({
       success: true,

@@ -5,6 +5,9 @@ import { useAuth } from '../../context/AuthContext';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
+import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
+import StarIcon from '@mui/icons-material/Star';
+import WarningAmberIcon from '@mui/icons-material/WarningAmber';
 
 const Dashboard = () => {
   const { user } = useAuth();
@@ -67,11 +70,17 @@ const Dashboard = () => {
     setError('');
   };
 
-  // ─── Score color ────────────────────────────────────────────────────────────
+  // ─── Score formatting ───────────────────────────────────────────────────────
   const scoreColor = (s) => {
-    if (s >= 75) return '#27ae60';
-    if (s >= 50) return '#f39c12';
-    return '#e74c3c';
+    if (s >= 75) return '#2dc08d';
+    if (s >= 50) return '#f59e0b';
+    return '#ef4444';
+  };
+
+  const scoreBadgeText = (s) => {
+    if (s >= 80) return 'Excellent ATS Match';
+    if (s >= 60) return 'Good Match · Minor Fixes Needed';
+    return 'Needs Optimization';
   };
 
   // ─── Render ─────────────────────────────────────────────────────────────────
@@ -81,17 +90,17 @@ const Dashboard = () => {
       <div className={styles.header}>
         <div>
           <p className={styles.greeting}>Welcome back, {user?.name?.split(' ')[0]} 👋</p>
-          <h1 className={styles.pageTitle}>Resume Match Analyzer</h1>
+          <h1 className={styles.pageTitle}>ATS Resume Checker &amp; AI Grader</h1>
         </div>
       </div>
 
       {!result ? (
-        /* ── Upload Form ── */
+        /* ── Upload Form (Enhancv Style) ── */
         <div className={styles.formGrid}>
           {/* Left: Upload zone */}
           <div className={styles.card}>
             <h2 className={styles.cardTitle}>📄 Upload Your Resume</h2>
-            <p className={styles.cardSubtitle}>PDF format only · Max 5MB</p>
+            <p className={styles.cardSubtitle}>Upload PDF resume for 27-point ATS check</p>
 
             <div
               id="drop-zone"
@@ -111,16 +120,16 @@ const Dashboard = () => {
               />
               {file ? (
                 <div className={styles.fileChosen}>
-                  <InsertDriveFileIcon sx={{ fontSize: 48, color: '#4848de' }} />
+                  <InsertDriveFileIcon sx={{ fontSize: 48, color: '#2dc08d' }} />
                   <div className={styles.fileName}>{file.name}</div>
                   <div className={styles.fileSize}>{(file.size / 1024).toFixed(0)} KB</div>
-                  <CheckCircleIcon sx={{ color: '#27ae60', fontSize: 28, marginTop: 1 }} />
+                  <CheckCircleIcon sx={{ color: '#2dc08d', fontSize: 28, marginTop: 1 }} />
                 </div>
               ) : (
                 <div className={styles.dropContent}>
-                  <CloudUploadIcon sx={{ fontSize: 56, color: '#4848de', opacity: 0.7 }} />
-                  <p className={styles.dropText}>Drag & drop your PDF here</p>
-                  <p className={styles.dropOr}>or click to browse files</p>
+                  <CloudUploadIcon sx={{ fontSize: 56, color: '#2dc08d', opacity: 0.8 }} />
+                  <p className={styles.dropText}>Drag &amp; drop your PDF here</p>
+                  <p className={styles.dropOr}>or click to browse from device</p>
                 </div>
               )}
             </div>
@@ -128,13 +137,13 @@ const Dashboard = () => {
 
           {/* Right: JD + submit */}
           <div className={styles.card}>
-            <h2 className={styles.cardTitle}>💼 Job Description</h2>
-            <p className={styles.cardSubtitle}>Paste the complete job description below</p>
+            <h2 className={styles.cardTitle}>💼 Target Job Description</h2>
+            <p className={styles.cardSubtitle}>Paste the job listing to check keyword matching</p>
 
             <textarea
               id="job-description-input"
               className={styles.textarea}
-              placeholder="Paste the full job description here…&#10;&#10;e.g. We are looking for a React Developer with 3+ years of experience..."
+              placeholder="Paste the full job description here…&#10;&#10;e.g. Seeking a Frontend Engineer with React, TypeScript, and modern web experience..."
               value={jobDesc}
               onChange={(e) => setJobDesc(e.target.value)}
               rows={12}
@@ -147,8 +156,8 @@ const Dashboard = () => {
 
           {/* Instructions banner */}
           <div className={styles.instructionBanner}>
-            <span>🔔</span>
-            <span>Ensure your resume contains readable text (not a scanned image). The AI will extract skills and match them against the job description.</span>
+            <AutoAwesomeIcon sx={{ fontSize: 20, color: '#2dc08d' }} />
+            <span>Our AI engine parses skills, formatting, action verbs, and ATS keywords to maximize your callback rate.</span>
           </div>
 
           {error && <div className={styles.errorMsg}>{error}</div>}
@@ -160,12 +169,12 @@ const Dashboard = () => {
             disabled={loading}
           >
             {loading ? (
-              <><span className={styles.btnSpinner} /> Analyzing with Gemini AI…</>
-            ) : '🚀 Analyze Resume'}
+              <><span className={styles.btnSpinner} /> Running ATS Check &amp; AI Analysis…</>
+            ) : '🚀 Check My Resume'}
           </button>
         </div>
       ) : (
-        /* ── Results Panel ── */
+        /* ── Enhancv-Style Report Results Panel ── */
         <div className={styles.results}>
           {/* Score hero */}
           <div className={styles.scoreCard}>
@@ -189,26 +198,29 @@ const Dashboard = () => {
               </div>
             </div>
             <div className={styles.scoreInfo}>
-              <h2 className={styles.scoreTitle}>Match Score</h2>
+              <div className={styles.scoreBadge} style={{ background: `${scoreColor(result.matchScore)}15`, color: scoreColor(result.matchScore), border: `1px solid ${scoreColor(result.matchScore)}40` }}>
+                {scoreBadgeText(result.matchScore)}
+              </div>
+              <h2 className={styles.scoreTitle}>ATS Match &amp; Grader Summary</h2>
               <p className={styles.scoreSummary}>{result.summary}</p>
               <button id="analyze-again" className={styles.againBtn} onClick={resetForm}>
-                🔄 Analyze Another Resume
+                🔄 Check Another Resume
               </button>
             </div>
           </div>
 
-          {/* Skills grid */}
+          {/* Results grid */}
           <div className={styles.resultsGrid}>
-            <SkillBlock title="✅ Matched Skills" items={result.extractedSkills} chipClass={styles.chipGreen} />
-            <SkillBlock title="❌ Missing Skills" items={result.missingSkills} chipClass={styles.chipRed} />
-            <SkillBlock title="⭐ Strengths" items={result.strengths} chipClass={styles.chipBlue} isList />
-            <SkillBlock title="🛠 Improvements" items={result.improvements} chipClass={styles.chipOrange} isList />
+            <SkillBlock title="Matched Keywords &amp; Skills" items={result.extractedSkills} chipClass={styles.chipGreen} icon={<CheckCircleIcon sx={{ fontSize: 18, color: '#10b981' }} />} />
+            <SkillBlock title="Missing Required Skills" items={result.missingSkills} chipClass={styles.chipRed} icon={<WarningAmberIcon sx={{ fontSize: 18, color: '#ef4444' }} />} />
+            <SkillBlock title="Key Strengths" items={result.strengths} chipClass={styles.chipBlue} icon={<StarIcon sx={{ fontSize: 18, color: '#3b82f6' }} />} isList />
+            <SkillBlock title="AI Fix Recommendations" items={result.improvements} chipClass={styles.chipOrange} icon={<AutoAwesomeIcon sx={{ fontSize: 18, color: '#f59e0b' }} />} isList />
           </div>
 
           {/* Job suggestions */}
           {result.jobSuggestions?.length > 0 && (
             <div className={styles.suggestCard}>
-              <h3 className={styles.suggestTitle}>💼 Recommended Job Titles for You</h3>
+              <h3 className={styles.suggestTitle}>💼 Recommended Job Titles matching your profile</h3>
               <div className={styles.suggestGrid}>
                 {result.jobSuggestions.map((job, i) => (
                   <div key={i} className={styles.jobChip}>{job}</div>
@@ -223,9 +235,12 @@ const Dashboard = () => {
 };
 
 // ── Sub-component: Skill/Strength block ──────────────────────────────────────
-const SkillBlock = ({ title, items, chipClass, isList }) => (
+const SkillBlock = ({ title, items, chipClass, icon, isList }) => (
   <div className={styles.skillCard}>
-    <h3 className={styles.skillCardTitle}>{title}</h3>
+    <div className={styles.cardHeaderFlex}>
+      {icon}
+      <h3 className={styles.skillCardTitle}>{title}</h3>
+    </div>
     {!items || items.length === 0 ? (
       <p className={styles.emptyMsg}>None identified</p>
     ) : isList ? (
