@@ -1,0 +1,476 @@
+.page {
+  flex: 1;
+  background: #f8fafc;
+  min-height: 100vh;
+  padding: clamp(16px, 3.5vw, 36px) clamp(14px, 3.5vw, 44px);
+  box-sizing: border-box;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  color: #0f172a;
+  min-width: 0;
+  width: 100%;
+}
+
+/* ── Header ── */
+.header {
+  margin-bottom: clamp(20px, 4vw, 32px);
+}
+
+.greeting {
+  font-size: clamp(13px, 2.5vw, 14px);
+  color: #64748b;
+  margin: 0 0 4px;
+  font-weight: 500;
+}
+
+.pageTitle {
+  font-size: clamp(20px, 4.5vw, 30px);
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0;
+  letter-spacing: -0.5px;
+  line-height: 1.25;
+}
+
+/* ── Form grid ── */
+.formGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  width: 100%;
+}
+
+.card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: clamp(18px, 3.5vw, 28px);
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.03);
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+.cardTitle {
+  font-size: clamp(16px, 3vw, 18px);
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0 0 4px;
+}
+
+.cardSubtitle {
+  font-size: clamp(12px, 2.2vw, 13px);
+  color: #64748b;
+  margin: 0 0 18px;
+}
+
+/* ── Drop zone ── */
+.dropZone {
+  border: 2px dashed #cbd5e1;
+  border-radius: 14px;
+  background: #f8fafc;
+  min-height: clamp(180px, 25vh, 220px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+}
+
+.dropZone:hover, .dragging {
+  border-color: #2dc08d;
+  background: #e6f7f2;
+}
+
+.hasFile {
+  border-color: #2dc08d;
+  background: #f0fdf4;
+}
+
+.hiddenInput {
+  display: none;
+}
+
+.dropContent {
+  text-align: center;
+  padding: 20px;
+}
+
+.dropText {
+  font-size: clamp(14px, 3vw, 16px);
+  color: #0f172a;
+  font-weight: 700;
+  margin: 12px 0 4px;
+}
+
+.dropOr {
+  font-size: 13px;
+  color: #64748b;
+  margin: 0;
+}
+
+.fileChosen {
+  text-align: center;
+  padding: 20px;
+  max-width: 100%;
+}
+
+.fileName {
+  font-size: 14px;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 8px 0 4px;
+  word-break: break-all;
+  overflow-wrap: anywhere;
+}
+
+.fileSize {
+  font-size: 12px;
+  color: #64748b;
+}
+
+/* ── Textarea ── */
+.textarea {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid #cbd5e1;
+  border-radius: 12px;
+  padding: 14px 16px;
+  font-size: 16px; /* 16px prevents iOS zoom on focus */
+  color: #0f172a;
+  background: #ffffff;
+  resize: vertical;
+  outline: none;
+  font-family: inherit;
+  transition: all 0.2s ease;
+  line-height: 1.6;
+  min-height: 180px;
+}
+
+.textarea:focus {
+  border-color: #2dc08d;
+  box-shadow: 0 0 0 3px rgba(45, 192, 141, 0.15);
+}
+
+.charCount {
+  font-size: 12px;
+  color: #94a3b8;
+  text-align: right;
+  margin-top: 6px;
+}
+
+/* ── Instructions ── */
+.instructionBanner {
+  grid-column: 1 / -1;
+  background: #e6f7f2;
+  border: 1px solid #b3ebd7;
+  border-radius: 12px;
+  padding: 14px 18px;
+  font-size: clamp(12.5px, 2.2vw, 14px);
+  color: #178a63;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+.errorMsg {
+  grid-column: 1 / -1;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #dc2626;
+  border-radius: 10px;
+  padding: 12px 16px;
+  font-size: 14px;
+  text-align: center;
+}
+
+/* ── Analyze button ── */
+.analyzeBtn {
+  grid-column: 1 / -1;
+  padding: 16px 24px;
+  background: #2dc08d;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: clamp(15px, 3vw, 17px);
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 52px;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 14px rgba(45, 192, 141, 0.3);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.analyzeBtn:hover:not(:disabled) {
+  background: #26a97b;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(45, 192, 141, 0.4);
+}
+
+.analyzeBtn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.btnSpinner {
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(255,255,255,0.3);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  flex-shrink: 0;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ─────────────── RESULTS ─────────────── */
+.results {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+}
+
+/* Score hero */
+.scoreCard {
+  background: white;
+  border-radius: 18px;
+  padding: clamp(20px, 4vw, 32px) clamp(16px, 4.5vw, 36px);
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+  display: flex;
+  gap: clamp(20px, 4vw, 36px);
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.scoreRing {
+  position: relative;
+  width: 130px;
+  height: 130px;
+  flex-shrink: 0;
+}
+
+.scoreSvg {
+  width: 130px;
+  height: 130px;
+  transform: rotate(-90deg);
+}
+
+.scoreTrack {
+  fill: none;
+  stroke: #f1f5f9;
+  stroke-width: 10;
+}
+
+.scoreProgress {
+  fill: none;
+  stroke-width: 10;
+  stroke-linecap: round;
+  stroke-dasharray: 327;
+  transition: stroke-dashoffset 1s ease;
+}
+
+.scoreInner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.scoreNumber {
+  font-size: clamp(32px, 6vw, 38px);
+  font-weight: 900;
+  line-height: 1;
+}
+
+.scoreLabel {
+  font-size: 13px;
+  color: #94a3b8;
+  font-weight: 600;
+}
+
+.scoreInfo {
+  flex: 1;
+  min-width: 0;
+}
+
+.scoreBadge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 9999px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.scoreTitle {
+  font-size: clamp(18px, 4vw, 22px);
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0 0 8px;
+}
+
+.scoreSummary {
+  font-size: clamp(13px, 2.2vw, 14px);
+  color: #475569;
+  line-height: 1.65;
+  margin: 0 0 18px;
+}
+
+.againBtn {
+  padding: 12px 22px;
+  background: #0f172a;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.againBtn:hover { background: #1e293b; }
+
+/* Results grid */
+.resultsGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  width: 100%;
+}
+
+.skillCard {
+  background: white;
+  border-radius: 16px;
+  padding: clamp(18px, 3.5vw, 24px);
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 3px 14px rgba(0, 0, 0, 0.03);
+  box-sizing: border-box;
+  min-width: 0;
+}
+
+.cardHeaderFlex {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.skillCardTitle {
+  font-size: clamp(15px, 2.8vw, 16px);
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.chip {
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: clamp(12px, 2.2vw, 13px);
+  font-weight: 600;
+  word-break: break-word;
+  max-width: 100%;
+}
+
+.chipGreen  { background: #dcfce7; color: #15803d; }
+.chipRed    { background: #fee2e2; color: #b91c1c; }
+.chipBlue   { background: #dbeafe; color: #1d4ed8; }
+.chipOrange { background: #fef3c7; color: #b45309; }
+
+.skillList {
+  margin: 0;
+  padding-left: 20px;
+  color: #334155;
+  font-size: clamp(13px, 2.2vw, 14px);
+  line-height: 1.8;
+}
+
+.emptyMsg {
+  color: #94a3b8;
+  font-size: 14px;
+  font-style: italic;
+}
+
+/* Job suggestions */
+.suggestCard {
+  background: #0f172a;
+  border-radius: 16px;
+  padding: clamp(20px, 4vw, 28px) clamp(16px, 4vw, 32px);
+  box-sizing: border-box;
+}
+
+.suggestTitle {
+  font-size: clamp(15px, 3vw, 17px);
+  font-weight: 700;
+  color: white;
+  margin: 0 0 16px;
+}
+
+.suggestGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.jobChip {
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.15);
+  color: white;
+  padding: 8px 16px;
+  border-radius: 24px;
+  font-size: clamp(12.5px, 2.2vw, 13.5px);
+  font-weight: 600;
+  transition: background 0.2s;
+  min-height: 38px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.jobChip:hover {
+  background: rgba(255,255,255,0.2);
+}
+
+/* ── Responsive Breakpoints ── */
+@media (max-width: 899px) {
+  .formGrid, .resultsGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 767px) {
+  .scoreCard {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .scoreInfo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .againBtn {
+    width: 100%;
+    max-width: 280px;
+  }
+}
