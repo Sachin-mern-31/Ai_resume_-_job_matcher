@@ -4,9 +4,16 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
  * Analyzes a resume against a job description using Gemini AI.
  */
 export const analyzeResume = async (resumeText, jobDescription) => {
-  const apiKey = process.env.GEMINI_API_KEY;
-  if (!apiKey || apiKey === 'your_gemini_api_key_here') {
-    throw new Error('Gemini API key is not configured. Please set GEMINI_API_KEY in server/.env');
+  const apiKey = process.env.GEMINI_API_KEY?.trim();
+  if (!apiKey || apiKey === 'your_gemini_api_key_here' || apiKey === 'your_gemini_api_key') {
+    throw new Error('Gemini API key is not configured. Please set GEMINI_API_KEY in server/.env from https://aistudio.google.com/app/apikey');
+  }
+
+  // Check for common wrong key format (e.g. session tokens or service account keys starting with AQ.)
+  if (apiKey.startsWith('AQ.') || (!apiKey.startsWith('AIzaSy') && apiKey.length !== 39)) {
+    console.error('⚠️ Warning: GEMINI_API_KEY does not start with "AIzaSy".');
+    console.error('👉 Google AI Studio API keys always begin with "AIzaSy" (39 characters).');
+    console.error('👉 If you see API_KEY_INVALID, generate a fresh key at: https://aistudio.google.com/app/apikey');
   }
 
   const genAI = new GoogleGenerativeAI(apiKey);
@@ -37,8 +44,8 @@ Respond with ONLY a valid JSON object (no markdown, no code fences, no extra tex
 Be specific, honest, and actionable. Base all analysis strictly on the text provided.
 `;
 
-  // Try available models (gemini-3.8-flash is current)
-  const modelNames = ['gemini-3.8-flash', 'gemini-2.5-flash', 'gemini-3.8-pro', 'gemini-1.5-flash'];
+  // Standard official Google Gemini models
+  const modelNames = ['gemini-1.5-flash', 'gemini-2.0-flash', 'gemini-1.5-pro', 'gemini-2.5-flash'];
   let text = '';
   let lastError = null;
 
@@ -51,11 +58,14 @@ Be specific, honest, and actionable. Base all analysis strictly on the text prov
     } catch (err) {
       lastError = err;
       console.warn(`Gemini model ${name} failed: ${err.message}. Trying next model...`);
+      if (err.message.includes('API_KEY_INVALID') || err.message.includes('API key not valid')) {
+        throw new Error('Invalid Gemini API Key. Please get a free API key from https://aistudio.google.com/app/apikey and update GEMINI_API_KEY in server/.env');
+      }
     }
   }
 
   if (!text) {
-    throw lastError || new Error('Failed to generate response from Gemini AI');
+    throw lastError || new Error('Failed to generate response from Gemini AI. Please check your API key and quota.');
   }
 
   // Extract JSON object using regex (handles code fences, introductory text, and linebreaks)

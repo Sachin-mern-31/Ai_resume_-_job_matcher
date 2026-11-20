@@ -1,9 +1,8 @@
 import Resume from '../models/Resume.js';
-import { analyzeResume }        from '../utils/geminiService.js';
-import { deleteFromCloudinary } from '../utils/cloudinaryService.js';
-import { createRequire }        from 'module';
-import axios   from 'axios';
-import fs      from 'fs';
+import { analyzeResume } from '../utils/geminiService.js';
+import { uploadToCloudinary, deleteFromCloudinary } from '../utils/cloudinaryService.js';
+import { createRequire } from 'module';
+import fs from 'fs';
 
 // pdf-parse import compatibility wrapper for v1 & v2
 const require = createRequire(import.meta.url);
@@ -34,56 +33,54 @@ export const uploadAndAnalyze = async (req, res) => {
       return res.status(400).json({ success: false, message: 'Job description must be at least 20 characters' });
     }
 
+    // Direct buffer from memoryStorage (instant and offline-ready)
+    const pdfBuffer = req.file.buffer || (req.file.path ? fs.readFileSync(req.file.path) : null);
+
+    if (!pdfBuffer) {
+      return res.status(400).json({ success: false, message: 'Could not access uploaded file buffer.' });
+    }
+
+    // Upload to Cloudinary in parallel if configured (does not block local parsing)
+    const cloudinaryPromise = uploadToCloudinary(pdfBuffer, req.file.originalname);
+
+    // Extract text from PDF buffer
+    let pdfText = '';
+    try {
+      pdfText = await parsePdfBuffer(pdfBuffer);
+    } catch (pdfErr) {
+      console.error('PDF Extraction Error:', pdfErr.message);
+      return res.status(422).json({
+        success: false,
+        message: 'Could not extract text from PDF. Ensure the file is a text-based, non-password-protected PDF.',
+      });
+    }
+
+    if (!pdfText || pdfText.trim().length < 50) {
+      return res.status(422).json({
+        success: false,
+        message: 'PDF has no readable text. Scanned or image-based PDFs cannot be parsed.',
+      });
+    }
+
+    // Await Cloudinary URL if available
+    const cloudinaryData = await cloudinaryPromise;
+
     // Create pending record
     const resumeDoc = await Resume.create({
       userId:             req.user._id,
       originalFilename:   req.file.originalname,
-      cloudinaryUrl:      req.file.path || null,
-      cloudinaryPublicId: req.file.filename || null,
+      cloudinaryUrl:      cloudinaryData.url || null,
+      cloudinaryPublicId: cloudinaryData.publicId || null,
       jobDescription:     jobDescription.trim(),
       status:             'processing',
     });
-
-    // Extract text from PDF buffer/path
-    let pdfText = '';
-    try {
-      let pdfBuffer;
-      if (req.file.buffer) {
-        pdfBuffer = req.file.buffer;
-      } else if (req.file.path && req.file.path.startsWith('http')) {
-        const response = await axios.get(req.file.path, { responseType: 'arraybuffer' });
-        pdfBuffer = Buffer.from(response.data);
-      } else if (req.file.path) {
-        pdfBuffer = fs.readFileSync(req.file.path);
-      }
-
-      if (!pdfBuffer) {
-        throw new Error('No PDF file buffer available');
-      }
-
-      pdfText = await parsePdfBuffer(pdfBuffer);
-    } catch (pdfErr) {
-      console.error('PDF Extraction Error:', pdfErr);
-      await Resume.findByIdAndUpdate(resumeDoc._id, {
-        status: 'failed',
-        errorMessage: 'Could not read PDF content. Ensure the file is not password-protected.',
-      });
-      return res.status(422).json({ success: false, message: 'Could not extract text from PDF' });
-    }
-
-    if (!pdfText || pdfText.trim().length < 50) {
-      await Resume.findByIdAndUpdate(resumeDoc._id, {
-        status: 'failed',
-        errorMessage: 'PDF appears to be empty or image-based (non-readable text).',
-      });
-      return res.status(422).json({ success: false, message: 'PDF has no readable text. Use a text-based PDF.' });
-    }
 
     // Call Gemini AI
     let analysis;
     try {
       analysis = await analyzeResume(pdfText, jobDescription.trim());
     } catch (aiErr) {
+      console.error('Gemini AI Analysis Error:', aiErr.message);
       await Resume.findByIdAndUpdate(resumeDoc._id, { status: 'failed', errorMessage: aiErr.message });
       return res.status(500).json({ success: false, message: aiErr.message });
     }
@@ -107,7 +104,7 @@ export const uploadAndAnalyze = async (req, res) => {
     res.status(201).json({ success: true, data: updated });
   } catch (err) {
     console.error('uploadAndAnalyze error:', err);
-    res.status(500).json({ success: false, message: err.message });
+    res.status(500).json({ success: false, message: err.message || 'Internal server error' });
   }
 };
 
